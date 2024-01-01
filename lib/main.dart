@@ -18,11 +18,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+          scaffoldBackgroundColor: backgroundDark,
           appBarTheme: const AppBarTheme(
-        iconTheme: IconThemeData(color: whiteColor),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      )),
+            iconTheme: IconThemeData(color: whiteColor),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          )),
       home: MyTabar(),
     );
   }
