@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -6,6 +6,8 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:musico/constants/colors.dart';
 import 'package:musico/constants/text.dart';
 import 'package:musico/controllers/audio_controller.dart';
+
+import '../customWidgets/customBox.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -96,29 +98,13 @@ class CustomCategories extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: songLists!.length,
                   itemBuilder: ((context, index) {
-                    return SizedBox(
-                      height: 190,
-                      child: Column(
-                        children: [
-                          QueryArtworkWidget(
-                              artworkQuality: FilterQuality.high,
-                              artworkFit: BoxFit.cover,
-                              artworkHeight: 120,
-                              artworkWidth: 140,
-                              artworkBorder: BorderRadius.circular(20),
-                              size: 700,
-                              id: songLists![index].id,
-
-                              // songLists![index].id,
-                              type: ArtworkType.AUDIO),
-                          SizedBox(
-                            width: 120,
-                            child: CustomText(
-                              text: songLists![index].title,
-                            ),
-                          )
-                        ],
-                      ),
+                    return CustomBox(
+                      pictureHeight: 120,
+                      pictureWidth: 130,
+                      radius: BorderRadius.circular(18),
+                      songId: songLists![index].id,
+                      songLists: songLists,
+                      songTitle: songLists![index].displayNameWOExt,
                     ).marginOnly(right: 20, top: 20);
                   })),
             ),
@@ -127,8 +113,7 @@ class CustomCategories extends StatelessWidget {
           ],
         ).marginSymmetric(horizontal: 15),
 
-        //
-
+        // Artists sliderr
         Column(
           children: [
             Row(
@@ -137,7 +122,7 @@ class CustomCategories extends StatelessWidget {
                 CustomText(
                   text: 'Artists',
                   fontSize: 20,
-                  color: backgroundDark,
+                  color: Color(0xffFF8216),
                   fontWeight: FontWeight.w600,
                 ).marginOnly(top: 1),
                 CustomText(
@@ -153,35 +138,59 @@ class CustomCategories extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemCount: songLists!.length,
                   itemBuilder: ((context, index) {
-                    return SizedBox(
-                      height: 190,
-                      child: Column(
-                        children: [
-                          QueryArtworkWidget(
-                              artworkQuality: FilterQuality.high,
-                              artworkFit: BoxFit.cover,
-                              artworkHeight: 120,
-                              artworkWidth: 120,
-                              artworkBorder: BorderRadius.circular(90),
-                              size: 700,
-                              id: songLists![index].id,
-                              type: ArtworkType.AUDIO),
-                          SizedBox(
-                            width: 120,
-                            child: CustomText(
-                              text: songLists![index].title,
-                            ),
-                          )
-                        ],
-                      ),
+                    return CustomBox(
+                      pictureHeight: 120,
+                      pictureWidth: 100,
+                      radius: BorderRadius.circular(18),
+                      songId: songLists![index].id,
+                      songLists: songLists,
+                      songTitle: songLists![index].artist.toString(),
                     ).marginOnly(right: 20, top: 20);
                   })),
             ),
+          ],
+        ).marginSymmetric(horizontal: 15),
 
-            ///
+        // most played
+
+        Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomText(
+                  text: 'Most Played',
+                  fontSize: 20,
+                  color: Color(0xffFF8216),
+                  fontWeight: FontWeight.w600,
+                ).marginOnly(top: 1),
+                CustomText(
+                  text: 'See All',
+                  fontSize: 20,
+                  color: Color(0xffFF8216),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 190,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: songLists!.length,
+                  itemBuilder: ((context, index) {
+                    return CustomBox(
+                            pictureHeight: 120,
+                            pictureWidth: 120,
+                            radius: BorderRadius.circular(30),
+                            songId: songLists![index].id,
+                            songTitle: songLists![index].title,
+                            songLists: songLists)
+                        .marginOnly(right: 20, top: 20);
+                  })),
+            ),
           ],
         ).marginSymmetric(horizontal: 15)
       ],
     );
   }
 }
+
